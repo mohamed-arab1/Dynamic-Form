@@ -26,16 +26,16 @@ const DynamicForm = () => {
   const [properties, setProperties] = useState<{ id: number; name: string; type: string; options: { id: number; name: string }[] }[]>([]);
   const [formValues, setFormValues] = useState<{ [key: number]: string }>({});
   const [submittedData, setSubmittedData] = useState<{ [key: number]: string } | null>(null);
-  
+
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/all-categories/web`, { headers })
+    axios.get("https://stagingapi.mazaady.com/api/v1/all-categories/web", { headers })
       .then(response => setCategories(response.data.data.categories.filter((cat: any) => cat.parent_id === null)))
       .catch(error => console.error("Error fetching categories:", error));
   }, []);
 
   const handleCategoryChange = (categoryId: number) => {
     setSelectedCategory(categoryId);
-    axios.get(`${API_BASE_URL}/all-categories/web`, { headers })
+    axios.get("https://stagingapi.mazaady.com/api/v1/all-categories/web", { headers })
       .then(response => setSubcategories(response.data.data.categories.filter((cat: any) => cat.parent_id === categoryId)))
       .catch(error => console.error("Error fetching subcategories:", error));
     setSelectedSubcategory(null);
@@ -44,7 +44,7 @@ const DynamicForm = () => {
 
   const handleSubcategoryChange = (subcategoryId: number) => {
     setSelectedSubcategory(subcategoryId);
-    axios.get(`${API_BASE_URL}/properties/${subcategoryId}`, { headers })
+    axios.get(`https://stagingapi.mazaady.com/api/v1/properties/${subcategoryId}`, { headers })
       .then(response => setProperties(response.data.data))
       .catch(error => console.error("Error fetching properties:", error));
   };
